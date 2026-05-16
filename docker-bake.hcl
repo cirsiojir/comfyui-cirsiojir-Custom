@@ -33,10 +33,10 @@ variable "TORCH_VERSION_5090" {
   default = "2.10.0+cu130"
 }
 variable "TORCHVISION_VERSION_5090" {
-  default = "0.25.0+cu130"
+  default = "0.22.0+cu130"
 }
 variable "TORCHAUDIO_VERSION_5090" {
-  default = "2.10.0+cu130"
+  default = "2.7.1+cu128"
 }
 variable "FILEBROWSER_VERSION" {
   default = "v2.59.0"
