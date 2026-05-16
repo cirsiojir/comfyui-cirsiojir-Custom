@@ -119,6 +119,10 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
 COPY scripts/prebake-manager-cache.py /tmp/prebake-manager-cache.py
 RUN python3.12 /tmp/prebake-manager-cache.py /tmp/build/ComfyUI/user/__manager/cache
 
+# 🔥 Tambahin ini
+RUN mkdir -p /tmp/build/ComfyUI/user/default/workflows
+COPY workflows/ /tmp/build/ComfyUI/user/default/workflows/
+
 # Bake ComfyUI + custom nodes into a known location for runtime copy
 RUN cp -r /tmp/build/ComfyUI /opt/comfyui-baked
 
