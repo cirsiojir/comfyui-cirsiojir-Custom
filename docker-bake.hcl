@@ -44,6 +44,9 @@ variable "FILEBROWSER_VERSION" {
 variable "FILEBROWSER_SHA256" {
   default = "8cd8c3baecb086028111b912f252a6e3169737fa764b5c510139e81f9da87799"
 }
+variable "RGTHREE_SHA" {
+  default = "738105af5fb14e96fbecaf406dc356e284797e8c"
+}
 
 group "default" {
   targets = ["common", "dev"]
