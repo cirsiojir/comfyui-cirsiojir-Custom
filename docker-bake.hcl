@@ -47,6 +47,9 @@ variable "FILEBROWSER_SHA256" {
 variable "RGTHREE_SHA" {
   default = "738105af5fb14e96fbecaf406dc356e284797e8c"
 }
+variable "FLUXKLEIN_SHA" {
+  default = "ce33bc8d5d1e5a00371357bccf4b51bd20550409"
+}
 
 group "default" {
   targets = ["common", "dev"]
@@ -64,6 +67,7 @@ target "common" {
     CIVICOMFY_SHA       = CIVICOMFY_SHA
     RUNPODDIRECT_SHA    = RUNPODDIRECT_SHA
     RGTHREE_SHA         = RGTHREE_SHA 
+    FLUXKLEIN_SHA       = FLUXKLEIN_SHA
     TORCH_VERSION       = TORCH_VERSION
     TORCHVISION_VERSION = TORCHVISION_VERSION
     TORCHAUDIO_VERSION  = TORCHAUDIO_VERSION
