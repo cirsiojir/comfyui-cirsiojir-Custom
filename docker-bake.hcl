@@ -78,28 +78,28 @@ target "common" {
 target "regular" {
   inherits = ["common"]
   tags = [
-    "runpod/comfyui:${TAG}-cuda12.8",
-    "runpod/comfyui:cuda12.8",
-    "runpod/comfyui:latest",
+    "cirsiojir/comfyui:${TAG}-cuda12.8",
+    "cirsiojir/comfyui:cuda12.8",
+    "cirsiojir/comfyui:latest",
   ]
 }
 
 # Dev image for local testing
 target "dev" {
   inherits = ["common"]
-  tags = ["runpod/comfyui:dev"]
+  tags = ["cirsiojir/comfyui:dev"]
   output = ["type=docker"]
 }
 
 # Dev push targets (for CI pushing dev tags, without overriding latest)
 target "devpush" {
   inherits = ["common"]
-  tags = ["runpod/comfyui:dev-cuda12.8"]
+  tags = ["cirsiojir/comfyui:dev-cuda12.8"]
 }
 
 target "devpush-cuda13" {
   inherits = ["common"]
-  tags = ["runpod/comfyui:dev-cuda13.0"]
+  tags = ["cirsiojir/comfyui:dev-cuda13.0"]
   args = {
     TORCH_VERSION       = TORCH_VERSION_5090
     TORCHVISION_VERSION = TORCHVISION_VERSION_5090
@@ -113,8 +113,8 @@ target "devpush-cuda13" {
 target "cuda13" {
   inherits = ["common"]
   tags = [
-    "runpod/comfyui:${TAG}-cuda13.0",
-    "runpod/comfyui:cuda13.0",
+    "cirsiojir/comfyui:${TAG}-cuda13.0",
+    "cirsiojir/comfyui:cuda13.0",
   ]
   args = {
     TORCH_VERSION       = TORCH_VERSION_5090
