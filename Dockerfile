@@ -15,6 +15,7 @@ ARG TORCH_VERSION
 ARG TORCHVISION_VERSION
 ARG TORCHAUDIO_VERSION
 ARG RGTHREE_SHA
+ARG FLUXKLEIN_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=12-8
@@ -65,7 +66,11 @@ RUN curl -fSL "https://github.com/ltdrdata/ComfyUI-Manager/archive/${MANAGER_SHA
     curl -fSL "https://github.com/MadiatorLabs/ComfyUI-RunpodDirect/archive/${RUNPODDIRECT_SHA}.tar.gz" -o runpoddirect.tar.gz && \
     mkdir -p ComfyUI-RunpodDirect && tar xzf runpoddirect.tar.gz --strip-components=1 -C ComfyUI-RunpodDirect && rm runpoddirect.tar.gz && \
     curl -fSL "https://github.com/rgthree/rgthree-comfy/archive/${RGTHREE_SHA}.tar.gz" -o rgthree.tar.gz && \
-    mkdir -p rgthree-comfy && tar xzf rgthree.tar.gz --strip-components=1 -C rgthree-comfy && rm rgthree.tar.gz
+    mkdir -p rgthree-comfy && tar xzf rgthree.tar.gz --strip-components=1 -C rgthree-comfy && rm rgthree.tar.gz && \
+    curl -fSL "https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer/archive/${FLUXKLEIN_SHA}.tar.gz" -o fluxklein.tar.gz && \
+    mkdir -p ComfyUI-Flux2Klein-Enhancer && \
+    tar xzf fluxklein.tar.gz --strip-components=1 -C ComfyUI-Flux2Klein-Enhancer && \
+    rm fluxklein.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -86,7 +91,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     cd /tmp/build/ComfyUI/custom_nodes/rgthree-comfy && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "rgthree-comfy ${RGTHREE_SHA}" && \
-    git remote add origin https://github.com/rgthree/rgthree-comfy.git
+    git remote add origin https://github.com/rgthree/rgthree-comfy.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Flux2Klein-Enhancer && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "Flux2Klein ${FLUXKLEIN_SHA}" && \
+    git remote add origin https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
