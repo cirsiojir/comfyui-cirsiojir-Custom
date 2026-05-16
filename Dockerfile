@@ -84,6 +84,7 @@ RUN cd /tmp/build/ComfyUI && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-RunpodDirect && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "ComfyUI-RunpodDirect ${RUNPODDIRECT_SHA}" && \
     git remote add origin https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/rgthree-comfy && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "rgthree-comfy ${RGTHREE_SHA}" && \
     git remote add origin https://github.com/rgthree/rgthree-comfy.git
 
