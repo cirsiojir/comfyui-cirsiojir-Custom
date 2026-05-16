@@ -75,7 +75,7 @@ RUN curl -fSL "https://github.com/ltdrdata/ComfyUI-Manager/archive/${MANAGER_SHA
     curl -fSL "https://github.com/jtydhr88/ComfyUI-qwenmultiangle/archive/${QWENMULTIANGLE_SHA}.tar.gz" -o qwenmultiangle.tar.gz && \
     mkdir -p ComfyUI-qwenmultiangle && \
     tar xzf qwenmultiangle.tar.gz --strip-components=1 -C ComfyUI-qwenmultiangle && \
-    rm qwenmultiangle.tar.gz
+    rm qwenmultiangle.tar.gz 
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -99,7 +99,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/rgthree/rgthree-comfy.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Flux2Klein-Enhancer && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "Flux2Klein ${FLUXKLEIN_SHA}" && \
-    git remote add origin https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git
+    git remote add origin https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-qwenmultiangle && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "QwenMultiAngle ${QWENMULTIANGLE_SHA}" && \
+    git remote add origin https://github.com/jtydhr88/ComfyUI-qwenmultiangle.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
