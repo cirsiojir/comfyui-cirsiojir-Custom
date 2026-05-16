@@ -44,7 +44,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "IMAGE_REF=runpod/comfyui" >> $GITHUB_ENV
+          echo "IMAGE_REF=cirsiojir/comfyui" >> $GITHUB_ENV
 
           # Determine version based on trigger type
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
