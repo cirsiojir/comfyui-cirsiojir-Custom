@@ -70,7 +70,11 @@ RUN curl -fSL "https://github.com/ltdrdata/ComfyUI-Manager/archive/${MANAGER_SHA
     curl -fSL "https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer/archive/${FLUXKLEIN_SHA}.tar.gz" -o fluxklein.tar.gz && \
     mkdir -p ComfyUI-Flux2Klein-Enhancer && \
     tar xzf fluxklein.tar.gz --strip-components=1 -C ComfyUI-Flux2Klein-Enhancer && \
-    rm fluxklein.tar.gz
+    rm fluxklein.tar.gz && \
+    curl -fSL "https://github.com/jtydhr88/ComfyUI-qwenmultiangle/archive/${QWENMULTIANGLE_SHA}.tar.gz" -o qwenmultiangle.tar.gz && \
+    mkdir -p ComfyUI-qwenmultiangle && \
+    tar xzf qwenmultiangle.tar.gz --strip-components=1 -C ComfyUI-qwenmultiangle && \
+    rm qwenmultiangle.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
