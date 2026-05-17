@@ -169,7 +169,7 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/city96/ComfyUI-GGUF.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI_LayerStyle && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LayerStyle ${LAYERSTYLE_SHA}" && \
-    git remote add origin https://github.com/chflame163/ComfyUI_LayerStyle.git && \
+    git remote add origin https://github.com/chflame163/ComfyUI_LayerStyle.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
