@@ -92,7 +92,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/lrzjason/Comfyui-QwenEditUtils/archive/${QWENEDITUTILS_SHA}.tar.gz" -o qweneditutils.tar.gz && \
     mkdir -p Comfyui-QwenEditUtils && tar xzf qweneditutils.tar.gz --strip-components=1 -C Comfyui-QwenEditUtils && rm qweneditutils.tar.gz && \
     curl -fSL "https://github.com/Fannovel16/comfyui_controlnet_aux/archive/${CONTROLNET_AUX_SHA}.tar.gz" -o controlnet_aux.tar.gz && \
-    mkdir -p comfyui_controlnet_aux && tar xzf controlnet_aux.tar.gz --strip-components=1 -C comfyui_controlnet_aux && rm controlnet_aux.tar.gz
+    mkdir -p comfyui_controlnet_aux && tar xzf controlnet_aux.tar.gz --strip-components=1 -C comfyui_controlnet_aux && rm controlnet_aux.tar.gz && \
+    curl -fSL "https://github.com/city96/ComfyUI_ExtraModels/archive/${EXTRAMODELS_SHA}.tar.gz" -o extramodels.tar.gz && \
+    mkdir -p ComfyUI_ExtraModels && tar xzf extramodels.tar.gz --strip-components=1 -C ComfyUI_ExtraModels && rm extramodels.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
