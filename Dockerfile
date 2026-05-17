@@ -27,6 +27,7 @@ ARG MEMORY_CLEANUP_SHA
 ARG ACADEMIASD_SHA
 ARG CRT_NODES_SHA
 ARG GGUF_SHA
+ARG LAYERSTYLE_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -106,7 +107,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/PGCRT/CRT-Nodes/archive/${CRT_NODES_SHA}.tar.gz" -o crt-nodes.tar.gz && \
     mkdir -p CRT-Nodes && tar xzf crt-nodes.tar.gz --strip-components=1 -C CRT-Nodes && rm crt-nodes.tar.gz && \
     curl -fSL "https://github.com/city96/ComfyUI-GGUF/archive/${GGUF_SHA}.tar.gz" -o gguf.tar.gz && \
-    mkdir -p ComfyUI-GGUF && tar xzf gguf.tar.gz --strip-components=1 -C ComfyUI-GGUF && rm gguf.tar.gz 
+    mkdir -p ComfyUI-GGUF && tar xzf gguf.tar.gz --strip-components=1 -C ComfyUI-GGUF && rm gguf.tar.gz && \
+    curl -fSL "https://github.com/chflame163/ComfyUI_LayerStyle/archive/${LAYERSTYLE_SHA}.tar.gz" -o layerstyle.tar.gz && \
+    mkdir -p ComfyUI_LayerStyle && tar xzf layerstyle.tar.gz --strip-components=1 -C ComfyUI_LayerStyle && rm layerstyle.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -164,6 +167,9 @@ RUN cd /tmp/build/ComfyUI && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-GGUF && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "GGUF ${GGUF_SHA}" && \
     git remote add origin https://github.com/city96/ComfyUI-GGUF.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI_LayerStyle && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LayerStyle ${LAYERSTYLE_SHA}" && \
+    git remote add origin https://github.com/chflame163/ComfyUI_LayerStyle.git && \
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
