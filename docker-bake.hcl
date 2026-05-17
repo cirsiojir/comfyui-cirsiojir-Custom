@@ -7,7 +7,7 @@ variable "COMFYUI_VERSION" {
   default = "v0.21.1"
 }
 variable "MANAGER_SHA" {
-  default = "66108ccdbc8c"
+  default = "a2c41a2a21ffff3c8f1dfc6da2010967ef87538e"
 }
 variable "KJNODES_SHA" {
   default = "4e1458c2417d"
