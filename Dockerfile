@@ -24,6 +24,7 @@ ARG QWENEDITUTILS_SHA
 ARG CONTROLNET_AUX_SHA
 ARG EXTRAMODELS_SHA
 ARG MEMORY_CLEANUP_SHA
+ARG ACADEMIASD_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -97,7 +98,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/city96/ComfyUI_ExtraModels/archive/${EXTRAMODELS_SHA}.tar.gz" -o extramodels.tar.gz && \
     mkdir -p ComfyUI_ExtraModels && tar xzf extramodels.tar.gz --strip-components=1 -C ComfyUI_ExtraModels && rm extramodels.tar.gz && \
     curl -fSL "https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup/archive/${MEMORY_CLEANUP_SHA}.tar.gz" -o memory_cleanup.tar.gz && \
-    mkdir -p Comfyui-Memory_Cleanup && tar xzf memory_cleanup.tar.gz --strip-components=1 -C Comfyui-Memory_Cleanup && rm memory_cleanup.tar.gz
+    mkdir -p Comfyui-Memory_Cleanup && tar xzf memory_cleanup.tar.gz --strip-components=1 -C Comfyui-Memory_Cleanup && rm memory_cleanup.tar.gz && \
+    curl -fSL "https://github.com/AcademiaSD/comfyui_AcademiaSD/archive/${ACADEMIASD_SHA}.tar.gz" -o academiasd.tar.gz && \
+    mkdir -p comfyui_AcademiaSD && tar xzf academiasd.tar.gz --strip-components=1 -C comfyui_AcademiaSD && rm academiasd.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -146,6 +149,9 @@ RUN cd /tmp/build/ComfyUI && \
     cd /tmp/build/ComfyUI/custom_nodes/Comfyui-Memory_Cleanup && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "MemoryCleanup ${MEMORY_CLEANUP_SHA}" && \
     git remote add origin https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup.git
+    cd /tmp/build/ComfyUI/custom_nodes/comfyui_AcademiaSD && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "AcademiaSD ${ACADEMIASD_SHA}" && \
+    git remote add origin https://github.com/AcademiaSD/comfyui_AcademiaSD.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
