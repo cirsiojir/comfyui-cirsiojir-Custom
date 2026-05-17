@@ -136,7 +136,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/lrzjason/Comfyui-QwenEditUtils.git && \
     cd /tmp/build/ComfyUI/custom_nodes/comfyui_controlnet_aux && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "ControlNetAux ${CONTROLNET_AUX_SHA}" && \
-    git remote add origin https://github.com/Fannovel16/comfyui_controlnet_aux.git
+    git remote add origin https://github.com/Fannovel16/comfyui_controlnet_aux.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI_ExtraModels && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "ExtraModels ${EXTRAMODELS_SHA}" && \
+    git remote add origin https://github.com/city96/ComfyUI_ExtraModels.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
