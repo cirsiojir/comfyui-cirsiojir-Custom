@@ -20,6 +20,7 @@ ARG QWENMULTIANGLE_SHA
 ARG VIDEOHELPERSUITE_SHA
 ARG CUSTOMSCRIPTS_SHA 
 ARG LTXVIDEO_SHA
+ARG QWENEDITUTILS_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -85,7 +86,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/pythongosssss/ComfyUI-Custom-Scripts/archive/${CUSTOMSCRIPTS_SHA}.tar.gz" -o customscripts.tar.gz && \
     mkdir -p ComfyUI-Custom-Scripts && tar xzf customscripts.tar.gz --strip-components=1 -C ComfyUI-Custom-Scripts && rm customscripts.tar.gz && \
     curl -fSL "https://github.com/Lightricks/ComfyUI-LTXVideo/archive/${LTXVIDEO_SHA}.tar.gz" -o ltxvideo.tar.gz && \
-    mkdir -p ComfyUI-LTXVideo && tar xzf ltxvideo.tar.gz --strip-components=1 -C ComfyUI-LTXVideo && rm ltxvideo.tar.gz
+    mkdir -p ComfyUI-LTXVideo && tar xzf ltxvideo.tar.gz --strip-components=1 -C ComfyUI-LTXVideo && rm ltxvideo.tar.gz && \
+    curl -fSL "https://github.com/lrzjason/Comfyui-QwenEditUtils/archive/${QWENEDITUTILS_SHA}.tar.gz" -o qweneditutils.tar.gz && \
+    mkdir -p Comfyui-QwenEditUtils && tar xzf qweneditutils.tar.gz --strip-components=1 -C Comfyui-QwenEditUtils && rm qweneditutils.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -121,7 +124,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-LTXVideo && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LTXVideo ${LTXVIDEO_SHA}" && \
-    git remote add origin https://github.com/Lightricks/ComfyUI-LTXVideo.git 
+    git remote add origin https://github.com/Lightricks/ComfyUI-LTXVideo.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/Comfyui-QwenEditUtils && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "QwenEditUtils ${QWENEDITUTILS_SHA}" && \
+    git remote add origin https://github.com/lrzjason/Comfyui-QwenEditUtils.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
