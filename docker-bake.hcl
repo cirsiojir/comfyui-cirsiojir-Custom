@@ -54,7 +54,7 @@ variable "QWENMULTIANGLE_SHA" {
   default = "6f93d9b15a50c07c13411734723fe5cae287e7aa"
 }
 variable "VIDEOHELPERSUITE_SHA" {
-  default = "3234937"
+  default = "4ee72c065db22c9d96c2427954dc69e7b908444b"
 }
 
 group "default" {
