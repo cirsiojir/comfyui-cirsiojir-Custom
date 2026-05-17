@@ -4,7 +4,7 @@ variable "TAG" {
 
 # === Version Pins (single source of truth) ===
 variable "COMFYUI_VERSION" {
-  default = "v0.21.1"
+  default = "v0.3.43"
 }
 variable "MANAGER_SHA" {
   default = "66108ccdbc8c"
@@ -30,13 +30,13 @@ variable "TORCHAUDIO_VERSION" {
 }
 # 5090 image (cu130) — can diverge from regular when needed
 variable "TORCH_VERSION_5090" {
-  default = "2.10.0+cu130"
+  default = "2.11.0+cu130"
 }
 variable "TORCHVISION_VERSION_5090" {
-  default = "0.22.0+cu130"
+  default = "0.26.0+cu130"
 }
 variable "TORCHAUDIO_VERSION_5090" {
-  default = "2.7.1+cu128"
+  default = "2.11.0+cu130"
 }
 variable "FILEBROWSER_VERSION" {
   default = "v2.59.0"
