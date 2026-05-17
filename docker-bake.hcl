@@ -80,6 +80,9 @@ variable "ACADEMIASD_SHA" {
 variable "CRT_NODES_SHA" {
   default = "b59f7112009584c801aa3b32f8d9dcf3de9dfb4c"
 }
+variable "GGUF_SHA" {
+  default = "6ea2651e7df66d7585f6ffee804b20e92fb38b8a"
+}
 
 group "default" {
   targets = ["common", "dev"]
@@ -108,6 +111,7 @@ target "common" {
     MEMORY_CLEANUP_SHA = MEMORY_CLEANUP_SHA
     ACADEMIASD_SHA = ACADEMIASD_SHA
     CRT_NODES_SHA = CRT_NODES_SHA
+    GGUF_SHA = GGUF_SHA
     TORCH_VERSION       = TORCH_VERSION
     TORCHVISION_VERSION = TORCHVISION_VERSION
     TORCHAUDIO_VERSION  = TORCHAUDIO_VERSION
