@@ -199,6 +199,8 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
     grep -n 'main' requirements.in || echo "=== main NOT FOUND ==="
 
 RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && \
+    echo "=== requirements.in ===" && cat requirements.in && \
+    echo "=== constraints.txt ===" && cat constraints.txt && \
     PIP_INDEX_URL=https://pypi.org/simple \
     PIP_EXTRA_INDEX_URL="${TORCH_INDEX_URL}" \
     PIP_CONSTRAINT=constraints.txt \
