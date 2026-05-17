@@ -165,11 +165,15 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
     echo "torchvision==${TORCHVISION_VERSION}" >> constraints.txt && \
     echo "torchaudio==${TORCHAUDIO_VERSION}" >> constraints.txt && \
     echo "pillow>=12.1.1" >> constraints.txt && \
-    TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && \
+    cat requirements.in
+
+RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && \
     PIP_INDEX_URL=https://pypi.org/simple \
     PIP_EXTRA_INDEX_URL="${TORCH_INDEX_URL}" \
     PIP_CONSTRAINT=constraints.txt \
-    pip-compile --generate-hashes --output-file=requirements.lock --strip-extras --allow-unsafe requirements.in && \
+    pip-compile --generate-hashes --output-file=requirements.lock --strip-extras --allow-unsafe requirements.in
+
+RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && \
     python3.12 -m pip install --no-cache-dir --ignore-installed --require-hashes \
     --index-url https://pypi.org/simple \
     --extra-index-url "${TORCH_INDEX_URL}" \
