@@ -181,7 +181,7 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
         fi; \
     done && \
     sed -i 's/ /\n/g' requirements.in && \
-    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v ':' | grep -E '^[a-zA-Z0-9]' > requirements.clean && \
+    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v ':' | grep -v '^@' | grep -v -E '^(main|master|HEAD)$' | grep -E '^[a-zA-Z0-9]' > requirements.clean && \
     mv requirements.clean requirements.in && \
     sort -u requirements.in -o requirements.in && \
     echo "GitPython" >> requirements.in && \
