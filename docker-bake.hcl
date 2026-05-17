@@ -53,6 +53,9 @@ variable "FLUXKLEIN_SHA" {
 variable "QWENMULTIANGLE_SHA" {
   default = "6f93d9b15a50c07c13411734723fe5cae287e7aa"
 }
+variable "VIDEOHELPERSUITE_SHA" {
+  default = "3234937"
+}
 
 group "default" {
   targets = ["common", "dev"]
