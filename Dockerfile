@@ -25,6 +25,7 @@ ARG CONTROLNET_AUX_SHA
 ARG EXTRAMODELS_SHA
 ARG MEMORY_CLEANUP_SHA
 ARG ACADEMIASD_SHA
+ARG CRT_NODES_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -100,7 +101,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup/archive/${MEMORY_CLEANUP_SHA}.tar.gz" -o memory_cleanup.tar.gz && \
     mkdir -p Comfyui-Memory_Cleanup && tar xzf memory_cleanup.tar.gz --strip-components=1 -C Comfyui-Memory_Cleanup && rm memory_cleanup.tar.gz && \
     curl -fSL "https://github.com/AcademiaSD/comfyui_AcademiaSD/archive/${ACADEMIASD_SHA}.tar.gz" -o academiasd.tar.gz && \
-    mkdir -p comfyui_AcademiaSD && tar xzf academiasd.tar.gz --strip-components=1 -C comfyui_AcademiaSD && rm academiasd.tar.gz
+    mkdir -p comfyui_AcademiaSD && tar xzf academiasd.tar.gz --strip-components=1 -C comfyui_AcademiaSD && rm academiasd.tar.gz && \
+    curl -fSL "https://github.com/PGCRT/CRT-Nodes/archive/${CRT_NODES_SHA}.tar.gz" -o crt-nodes.tar.gz && \
+    mkdir -p CRT-Nodes && tar xzf crt-nodes.tar.gz --strip-components=1 -C CRT-Nodes && rm crt-nodes.tar.gz 
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -151,7 +154,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup.git
     cd /tmp/build/ComfyUI/custom_nodes/comfyui_AcademiaSD && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "AcademiaSD ${ACADEMIASD_SHA}" && \
-    git remote add origin https://github.com/AcademiaSD/comfyui_AcademiaSD.git
+    git remote add origin https://github.com/AcademiaSD/comfyui_AcademiaSD.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/CRT-Nodes && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "CRT-Nodes ${CRT_NODES_SHA}" && \
+    git remote add origin https://github.com/PGCRT/CRT-Nodes.git 
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
