@@ -156,6 +156,8 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
             cat "$node_dir/requirements.txt" >> requirements.in; \
         fi; \
     done && \
+    sed -i 's/ /\n/g' requirements.in && \
+    sort -u requirements.in -o requirements.in && \
     echo "GitPython" >> requirements.in && \
     echo "opencv-python" >> requirements.in && \
     echo "jupyter" >> requirements.in && \
