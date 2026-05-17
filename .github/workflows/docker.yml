@@ -29,4 +29,5 @@ jobs:
         run: |
           docker buildx bake cuda13 \
             --set "*.tags=ghcr.io/${{ github.repository_owner }}/comfyui-cirsiojir:latest" \
+            --no-cache \
             --push
