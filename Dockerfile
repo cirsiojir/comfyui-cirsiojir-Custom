@@ -151,7 +151,7 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/city96/ComfyUI_ExtraModels.git && \
     cd /tmp/build/ComfyUI/custom_nodes/Comfyui-Memory_Cleanup && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "MemoryCleanup ${MEMORY_CLEANUP_SHA}" && \
-    git remote add origin https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup.git
+    git remote add origin https://github.com/LAOGOU-666/Comfyui-Memory_Cleanup.git && \
     cd /tmp/build/ComfyUI/custom_nodes/comfyui_AcademiaSD && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "AcademiaSD ${ACADEMIASD_SHA}" && \
     git remote add origin https://github.com/AcademiaSD/comfyui_AcademiaSD.git && \
