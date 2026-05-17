@@ -19,8 +19,8 @@ ARG FLUXKLEIN_SHA
 ARG QWENMULTIANGLE_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
-ARG CUDA_VERSION_DASH=12-8
-ARG TORCH_INDEX_SUFFIX=cu128
+ARG CUDA_VERSION_DASH=13-0
+ARG TORCH_INDEX_SUFFIX=cu130
 
 # Install minimal dependencies needed for building
 RUN apt-get update && \
@@ -153,7 +153,7 @@ ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
 ENV FILEBROWSER_CONFIG=/workspace/runpod-slim/.filebrowser.json
 
 # ---- CUDA variant (re-declared for runtime stage) ----
-ARG CUDA_VERSION_DASH=12-8
+ARG CUDA_VERSION_DASH=13-0
 
 # ---- FileBrowser version pin (set in docker-bake.hcl) ----
 ARG FILEBROWSER_VERSION
