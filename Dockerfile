@@ -19,6 +19,7 @@ ARG FLUXKLEIN_SHA
 ARG QWENMULTIANGLE_SHA
 ARG VIDEOHELPERSUITE_SHA
 ARG CUSTOMSCRIPTS_SHA 
+ARG LTXVIDEO_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -82,7 +83,9 @@ RUN curl -fSL "https://github.com/ltdrdata/ComfyUI-Manager/archive/${MANAGER_SHA
     curl -fSL "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/archive/${VIDEOHELPERSUITE_SHA}.tar.gz" -o videohelpersuite.tar.gz && \
     mkdir -p ComfyUI-VideoHelperSuite && tar xzf videohelpersuite.tar.gz --strip-components=1 -C ComfyUI-VideoHelperSuite && rm videohelpersuite.tar.gz && \
     curl -fSL "https://github.com/pythongosssss/ComfyUI-Custom-Scripts/archive/${CUSTOMSCRIPTS_SHA}.tar.gz" -o customscripts.tar.gz && \
-    mkdir -p ComfyUI-Custom-Scripts && tar xzf customscripts.tar.gz --strip-components=1 -C ComfyUI-Custom-Scripts && rm customscripts.tar.gz
+    mkdir -p ComfyUI-Custom-Scripts && tar xzf customscripts.tar.gz --strip-components=1 -C ComfyUI-Custom-Scripts && rm customscripts.tar.gz && \
+    curl -fSL "https://github.com/Lightricks/ComfyUI-LTXVideo/archive/${LTXVIDEO_SHA}.tar.gz" -o ltxvideo.tar.gz && \
+    mkdir -p ComfyUI-LTXVideo && tar xzf ltxvideo.tar.gz --strip-components=1 -C ComfyUI-LTXVideo && rm ltxvideo.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -115,7 +118,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Custom-Scripts && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "CustomScripts ${CUSTOMSCRIPTS_SHA}" && \
-    git remote add origin https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git
+    git remote add origin https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-LTXVideo && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LTXVideo ${LTXVIDEO_SHA}" && \
+    git remote add origin https://github.com/Lightricks/ComfyUI-LTXVideo.git 
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
