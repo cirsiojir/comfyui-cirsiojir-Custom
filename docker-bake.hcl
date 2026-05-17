@@ -4,7 +4,7 @@ variable "TAG" {
 
 # === Version Pins (single source of truth) ===
 variable "COMFYUI_VERSION" {
-  default = "v0.20.1"
+  default = "v0.21.1"
 }
 variable "MANAGER_SHA" {
   default = "66108ccdbc8c"
