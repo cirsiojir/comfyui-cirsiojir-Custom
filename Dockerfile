@@ -26,6 +26,7 @@ ARG EXTRAMODELS_SHA
 ARG MEMORY_CLEANUP_SHA
 ARG ACADEMIASD_SHA
 ARG CRT_NODES_SHA
+ARG GGUF_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -103,7 +104,9 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/AcademiaSD/comfyui_AcademiaSD/archive/${ACADEMIASD_SHA}.tar.gz" -o academiasd.tar.gz && \
     mkdir -p comfyui_AcademiaSD && tar xzf academiasd.tar.gz --strip-components=1 -C comfyui_AcademiaSD && rm academiasd.tar.gz && \
     curl -fSL "https://github.com/PGCRT/CRT-Nodes/archive/${CRT_NODES_SHA}.tar.gz" -o crt-nodes.tar.gz && \
-    mkdir -p CRT-Nodes && tar xzf crt-nodes.tar.gz --strip-components=1 -C CRT-Nodes && rm crt-nodes.tar.gz 
+    mkdir -p CRT-Nodes && tar xzf crt-nodes.tar.gz --strip-components=1 -C CRT-Nodes && rm crt-nodes.tar.gz && \
+    curl -fSL "https://github.com/city96/ComfyUI-GGUF/archive/${GGUF_SHA}.tar.gz" -o gguf.tar.gz && \
+    mkdir -p ComfyUI-GGUF && tar xzf gguf.tar.gz --strip-components=1 -C ComfyUI-GGUF && rm gguf.tar.gz 
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -157,7 +160,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/AcademiaSD/comfyui_AcademiaSD.git && \
     cd /tmp/build/ComfyUI/custom_nodes/CRT-Nodes && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "CRT-Nodes ${CRT_NODES_SHA}" && \
-    git remote add origin https://github.com/PGCRT/CRT-Nodes.git 
+    git remote add origin https://github.com/PGCRT/CRT-Nodes.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-GGUF && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "GGUF ${GGUF_SHA}" && \
+    git remote add origin https://github.com/city96/ComfyUI-GGUF.git && \
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
