@@ -151,7 +151,8 @@ RUN cd /tmp/build/ComfyUI && \
 WORKDIR /tmp/build
 RUN cat ComfyUI/requirements.txt > requirements.in && \
     for node_dir in ComfyUI/custom_nodes/*/; do \
-        if [ -f "$node_dir/requirements.txt" ]; then \
+        node_name=$(basename "$node_dir") && \
+        if [ -f "$node_dir/requirements.txt" ] && [ "$node_name" != "comfyui_controlnet_aux" ]; then \
             cat "$node_dir/requirements.txt" >> requirements.in; \
         fi; \
     done && \
