@@ -83,7 +83,9 @@ variable "CRT_NODES_SHA" {
 variable "GGUF_SHA" {
   default = "6ea2651e7df66d7585f6ffee804b20e92fb38b8a"
 }
-
+variable "LAYERSTYLE_SHA" {
+  default = "d94bef1ee5ed3656f5ff1bb2830a4ffd94f40935"
+}
 group "default" {
   targets = ["common", "dev"]
 }
@@ -112,6 +114,7 @@ target "common" {
     ACADEMIASD_SHA = ACADEMIASD_SHA
     CRT_NODES_SHA = CRT_NODES_SHA
     GGUF_SHA = GGUF_SHA
+    LAYERSTYLE_SHA = LAYERSTYLE_SHA
     TORCH_VERSION       = TORCH_VERSION
     TORCHVISION_VERSION = TORCHVISION_VERSION
     TORCHAUDIO_VERSION  = TORCHAUDIO_VERSION
