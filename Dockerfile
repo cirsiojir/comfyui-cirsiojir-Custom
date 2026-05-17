@@ -180,11 +180,9 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
             cat "$node_dir/requirements.txt" >> requirements.in; \
         fi; \
     done && \
-    sed -i 's/ /\n/g' requirements.in && \
-    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v ':' | grep -v '^@' | grep -v -E '^(main|master|HEAD)$' | grep -E '^[a-zA-Z0-9]' > requirements.clean && \
+    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v '^-' | grep -v 'git+' | grep -v 'http' | sed 's/#.*//' | sed 's/\s.*//' | grep -E '^[a-zA-Z0-9][a-zA-Z0-9._-]+' > requirements.clean && \
     mv requirements.clean requirements.in && \
     sort -u requirements.in -o requirements.in && \
-    echo "# bust" >> requirements.in && \
     echo "GitPython" >> requirements.in && \
     echo "opencv-python" >> requirements.in && \
     echo "jupyter" >> requirements.in && \
