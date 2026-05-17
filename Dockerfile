@@ -17,6 +17,7 @@ ARG TORCHAUDIO_VERSION
 ARG RGTHREE_SHA
 ARG FLUXKLEIN_SHA
 ARG QWENMULTIANGLE_SHA
+ARG VIDEOHELPERSUITE_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -54,7 +55,8 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Download pinned source archives
 WORKDIR /tmp/build
-RUN curl -fSL "https://github.com/comfyanonymous/ComfyUI/archive/refs/tags/${COMFYUI_VERSION}.tar.gz" -o comfyui.tar.gz && \
+RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI/archive/refs/tags/${COMFYUI_VERSION}.tar.gz" \
+    -o comfyui.tar.gz && \
     mkdir -p ComfyUI && tar xzf comfyui.tar.gz --strip-components=1 -C ComfyUI && rm comfyui.tar.gz
 
 WORKDIR /tmp/build/ComfyUI/custom_nodes
@@ -75,13 +77,15 @@ RUN curl -fSL "https://github.com/ltdrdata/ComfyUI-Manager/archive/${MANAGER_SHA
     curl -fSL "https://github.com/jtydhr88/ComfyUI-qwenmultiangle/archive/${QWENMULTIANGLE_SHA}.tar.gz" -o qwenmultiangle.tar.gz && \
     mkdir -p ComfyUI-qwenmultiangle && \
     tar xzf qwenmultiangle.tar.gz --strip-components=1 -C ComfyUI-qwenmultiangle && \
-    rm qwenmultiangle.tar.gz 
+    rm qwenmultiangle.tar.gz && \ 
+    curl -fSL "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/archive/${VIDEOHELPERSUITE_SHA}.tar.gz" -o videohelpersuite.tar.gz && \
+    mkdir -p ComfyUI-VideoHelperSuite && tar xzf videohelpersuite.tar.gz --strip-components=1 -C ComfyUI-VideoHelperSuite && rm videohelpersuite.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
 RUN cd /tmp/build/ComfyUI && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "ComfyUI ${COMFYUI_VERSION}" && git tag "${COMFYUI_VERSION}" && \
-    git remote add origin https://github.com/comfyanonymous/ComfyUI.git && \
+    git remote add origin https://github.com/Comfy-Org/ComfyUI.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Manager && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "ComfyUI-Manager ${MANAGER_SHA}" && \
     git remote add origin https://github.com/ltdrdata/ComfyUI-Manager.git && \
@@ -102,7 +106,10 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-qwenmultiangle && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "QwenMultiAngle ${QWENMULTIANGLE_SHA}" && \
-    git remote add origin https://github.com/jtydhr88/ComfyUI-qwenmultiangle.git
+    git remote add origin https://github.com/jtydhr88/ComfyUI-qwenmultiangle.git && \
+    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite && \
+    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "VideoHelperSuite ${VIDEOHELPERSUITE_SHA}" && \
+    git remote add origin https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git 
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
