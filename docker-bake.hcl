@@ -86,6 +86,9 @@ variable "GGUF_SHA" {
 variable "LAYERSTYLE_SHA" {
   default = "d94bef1ee5ed3656f5ff1bb2830a4ffd94f40935"
 }
+variable "TENSTRIP_SHA" {
+  default = "c231acaaf66dff9153fc190a9a8e67a8198005a6"
+}
 group "default" {
   targets = ["common", "dev"]
 }
@@ -115,6 +118,7 @@ target "common" {
     CRT_NODES_SHA = CRT_NODES_SHA
     GGUF_SHA = GGUF_SHA
     LAYERSTYLE_SHA = LAYERSTYLE_SHA
+    TENSTRIP_SHA = TENSTRIP_SHA
     TORCH_VERSION       = TORCH_VERSION
     TORCHVISION_VERSION = TORCHVISION_VERSION
     TORCHAUDIO_VERSION  = TORCHAUDIO_VERSION
