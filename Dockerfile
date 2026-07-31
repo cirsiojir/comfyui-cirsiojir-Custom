@@ -326,6 +326,7 @@ COPY start.sh /start.sh
 
 # Set Python 3.12 as default
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
-    update-alternatives --set python3 /usr/bin/python3.12
+    update-alternatives --set python3 /usr/bin/python3.12 && \
+    ln -sf /usr/bin/python3.12 /usr/local/bin/python
 
 ENTRYPOINT ["/start.sh"]
