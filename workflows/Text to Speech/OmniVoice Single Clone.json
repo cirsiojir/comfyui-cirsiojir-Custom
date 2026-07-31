@@ -1,0 +1,286 @@
+{
+  "id": "58584b79-8fcd-48d5-ab8d-be8303f9af4f",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadAudio",
+      "pos": [
+        -6774.096219584769,
+        4045.343015337587
+      ],
+      "size": [
+        282.798828125,
+        136
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.17.0",
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "rhoma1.mp3",
+        null,
+        null
+      ],
+      "color": "#346434",
+      "bgcolor": "rgba(24,24,27,.9)"
+    },
+    {
+      "id": 2,
+      "type": "OmniVoiceVoiceCloneTTS",
+      "pos": [
+        -6434.49386846883,
+        4054.234188603293
+      ],
+      "size": [
+        401.40252773403836,
+        618
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 1
+        },
+        {
+          "name": "whisper_model",
+          "shape": 7,
+          "type": "WHISPER_ASR",
+          "link": 2
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-omnivoice-tts",
+        "ver": "bbc483ee74d0222fa8bd8bb35b41fd407806bce1",
+        "Node name for S&R": "OmniVoiceVoiceCloneTTS"
+      },
+      "widgets_values": [
+        "OmniVoice-bf16 (auto download)",
+        "prompt",
+        "",
+        32,
+        1.5,
+        0.1,
+        0.5,
+        0,
+        "auto",
+        "auto",
+        "auto",
+        130602488,
+        "randomize",
+        5,
+        0,
+        5,
+        true,
+        true,
+        true,
+        false,
+        ""
+      ]
+    },
+    {
+      "id": 3,
+      "type": "OmniVoiceWhisperLoader",
+      "pos": [
+        -6772.411851412746,
+        4246.632511072876
+      ],
+      "size": [
+        280.4712890625,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "whisper_model",
+          "type": "WHISPER_ASR",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-omnivoice-tts",
+        "ver": "0.1.1",
+        "Node name for S&R": "OmniVoiceWhisperLoader",
+        "aux_id": "Saganaki22/ComfyUI-OmniVoice-TTS"
+      },
+      "widgets_values": [
+        "whisper-medium (auto-download)",
+        "auto",
+        "fp16"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -6764.342546942996,
+        4398.530473794135
+      ],
+      "size": [
+        284.94491909452154,
+        292.09980774996893
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "title": "Audio Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.17.0",
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "ya -- demikianlah perempuan, ia hanya ingat kekejaman orang kepada dirinya walaupun kecil dan dia lupa kekejamannya sendiri pada orang lain padahal begitu besarnya. \n\nLupakah kau siapakah di antara kita yang kejam? Bukankah kau yang telah berjanji ketika saya diusir oleh ninik mamakmu karna saya asalnya tidak tentu. Orang hina dina tidak tulen minangkabau. Ketika itu kau antarkan saya ke simpang jalan, kau berjanji akan menunggu kedatanganku berapapun lamanya. Tapi kemudian kau berpaling ke yang lebih gagah, kaya raya, berbangsa, beradat, berlembaga, berketurunan. Kau kawin dengan dia, kau sendiri yang bilang padaku bahwa perkawinan itu bukan paksaan orang lain, tetapi pilihan hati kau sendiri. "
+      ],
+      "color": "#346434",
+      "bgcolor": "rgba(24,24,27,.9)"
+    },
+    {
+      "id": 5,
+      "type": "PreviewAudio",
+      "pos": [
+        -6432.977108106164,
+        4721.903872970606
+      ],
+      "size": [
+        406.0001069935929,
+        115.94220483669596
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 4
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.17.0",
+        "Node name for S&R": "PreviewAudio"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "AUDIO"
+    ],
+    [
+      2,
+      3,
+      0,
+      2,
+      1,
+      "WHISPER_ASR"
+    ],
+    [
+      3,
+      4,
+      0,
+      2,
+      2,
+      "STRING"
+    ],
+    [
+      4,
+      2,
+      0,
+      5,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "OmniVoice Single Speaker Clone",
+      "bounding": [
+        -6802.99252971801,
+        3949.320783473852,
+        866.2698605203432,
+        986.1614025142981
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9646149645002399,
+      "offset": [
+        7298.527035807337,
+        -3843.579110626339
+      ]
+    },
+    "frontendVersion": "1.41.21",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
