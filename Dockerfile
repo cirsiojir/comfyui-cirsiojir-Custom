@@ -19,7 +19,6 @@ ARG FLUXKLEIN_SHA
 ARG QWENMULTIANGLE_SHA
 ARG VIDEOHELPERSUITE_SHA
 ARG CUSTOMSCRIPTS_SHA 
-ARG LTXVIDEO_SHA
 ARG QWENEDITUTILS_SHA
 ARG CONTROLNET_AUX_SHA
 ARG EXTRAMODELS_SHA
@@ -28,7 +27,6 @@ ARG ACADEMIASD_SHA
 ARG CRT_NODES_SHA
 ARG GGUF_SHA
 ARG LAYERSTYLE_SHA
-ARG TENSTRIP_SHA
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -93,8 +91,6 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     mkdir -p ComfyUI-VideoHelperSuite && tar xzf videohelpersuite.tar.gz --strip-components=1 -C ComfyUI-VideoHelperSuite && rm videohelpersuite.tar.gz && \
     curl -fSL "https://github.com/pythongosssss/ComfyUI-Custom-Scripts/archive/${CUSTOMSCRIPTS_SHA}.tar.gz" -o customscripts.tar.gz && \
     mkdir -p ComfyUI-Custom-Scripts && tar xzf customscripts.tar.gz --strip-components=1 -C ComfyUI-Custom-Scripts && rm customscripts.tar.gz && \
-    curl -fSL "https://github.com/Lightricks/ComfyUI-LTXVideo/archive/${LTXVIDEO_SHA}.tar.gz" -o ltxvideo.tar.gz && \
-    mkdir -p ComfyUI-LTXVideo && tar xzf ltxvideo.tar.gz --strip-components=1 -C ComfyUI-LTXVideo && rm ltxvideo.tar.gz && \
     curl -fSL "https://github.com/lrzjason/Comfyui-QwenEditUtils/archive/${QWENEDITUTILS_SHA}.tar.gz" -o qweneditutils.tar.gz && \
     mkdir -p Comfyui-QwenEditUtils && tar xzf qweneditutils.tar.gz --strip-components=1 -C Comfyui-QwenEditUtils && rm qweneditutils.tar.gz && \
     curl -fSL "https://github.com/Fannovel16/comfyui_controlnet_aux/archive/${CONTROLNET_AUX_SHA}.tar.gz" -o controlnet_aux.tar.gz && \
@@ -110,9 +106,7 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     curl -fSL "https://github.com/city96/ComfyUI-GGUF/archive/${GGUF_SHA}.tar.gz" -o gguf.tar.gz && \
     mkdir -p ComfyUI-GGUF && tar xzf gguf.tar.gz --strip-components=1 -C ComfyUI-GGUF && rm gguf.tar.gz && \
     curl -fSL "https://github.com/chflame163/ComfyUI_LayerStyle/archive/${LAYERSTYLE_SHA}.tar.gz" -o layerstyle.tar.gz && \
-    mkdir -p ComfyUI_LayerStyle && tar xzf layerstyle.tar.gz --strip-components=1 -C ComfyUI_LayerStyle && rm layerstyle.tar.gz && \
-    curl -fSL "https://github.com/TenStrip/10S-Comfy-nodes/archive/${TENSTRIP_SHA}.tar.gz" -o tenstrip.tar.gz && \
-    mkdir -p 10S_Nodes && tar xzf tenstrip.tar.gz --strip-components=1 -C 10S_Nodes && rm tenstrip.tar.gz
+    mkdir -p ComfyUI_LayerStyle && tar xzf layerstyle.tar.gz --strip-components=1 -C ComfyUI_LayerStyle && rm layerstyle.tar.gz
 
 # Init git repos with upstream remotes so ComfyUI-Manager can detect versions
 # and users can update via Manager at their own risk
@@ -146,9 +140,6 @@ RUN cd /tmp/build/ComfyUI && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Custom-Scripts && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "CustomScripts ${CUSTOMSCRIPTS_SHA}" && \
     git remote add origin https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
-    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-LTXVideo && \
-    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LTXVideo ${LTXVIDEO_SHA}" && \
-    git remote add origin https://github.com/Lightricks/ComfyUI-LTXVideo.git && \
     cd /tmp/build/ComfyUI/custom_nodes/Comfyui-QwenEditUtils && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "QwenEditUtils ${QWENEDITUTILS_SHA}" && \
     git remote add origin https://github.com/lrzjason/Comfyui-QwenEditUtils.git && \
@@ -172,10 +163,7 @@ RUN cd /tmp/build/ComfyUI && \
     git remote add origin https://github.com/city96/ComfyUI-GGUF.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI_LayerStyle && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "LayerStyle ${LAYERSTYLE_SHA}" && \
-    git remote add origin https://github.com/chflame163/ComfyUI_LayerStyle.git && \
-    cd /tmp/build/ComfyUI/custom_nodes/10S_Nodes && \
-    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "10S-Comfy-nodes ${TENSTRIP_SHA}" && \
-    git remote add origin https://github.com/TenStrip/10S-Comfy-nodes.git
+    git remote add origin https://github.com/chflame163/ComfyUI_LayerStyle.git
 
 # Generate lock file from all requirements (including torch pins), then install with hash verification
 WORKDIR /tmp/build
