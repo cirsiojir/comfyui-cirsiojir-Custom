@@ -27,6 +27,7 @@ ARG ACADEMIASD_SHA
 ARG CRT_NODES_SHA
 ARG GGUF_SHA
 ARG LAYERSTYLE_SHA
+ARG SAGEATTENTION_COMMIT
 
 # ---- CUDA variant (set in docker-bake.hcl per target) ----
 ARG CUDA_VERSION_DASH=13-0
@@ -203,6 +204,17 @@ RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && 
     --index-url https://pypi.org/simple \
     --extra-index-url "${TORCH_INDEX_URL}" \
     -r requirements.lock
+
+# Build & install SageAttention from source (pinned commit)
+RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
+    cd /tmp/build/SageAttention && \
+    git checkout ${SAGEATTENTION_COMMIT} && \
+    case "${TORCH_INDEX_SUFFIX}" in \
+        cu130) export TORCH_CUDA_ARCH_LIST="12.0" ;; \
+        cu128) export TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0" ;; \
+    esac && \
+    python3.12 -m pip install --no-cache-dir --no-build-isolation -e . && \
+    rm -rf /tmp/build/SageAttention/.git
 
 # Pre-populate ComfyUI-Manager cache so first cold start skips the slow registry fetch
 COPY scripts/prebake-manager-cache.py /tmp/prebake-manager-cache.py
