@@ -47,7 +47,7 @@ RUN apt-get update && \
     && wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update \
-    && apt-get install -y --no-install-recommends cuda-minimal-build-${CUDA_VERSION_DASH} libcusparse-dev-${CUDA_VERSION_DASH} \
+    && apt-get install -y --no-install-recommends cuda-minimal-build-${CUDA_VERSION_DASH} libcusparse-dev-${CUDA_VERSION_DASH} libcublas-dev-${CUDA_VERSION_DASH} \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm cuda-keyring_1.1-1_all.deb \
