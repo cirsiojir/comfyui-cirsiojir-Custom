@@ -205,7 +205,6 @@ RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && 
     --extra-index-url "${TORCH_INDEX_URL}" \
     -r requirements.lock
 
-# Build & install SageAttention from source (pinned commit)
 RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
     cd /tmp/build/SageAttention && \
     git checkout ${SAGEATTENTION_COMMIT} && \
@@ -213,6 +212,7 @@ RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAtte
         cu130) export TORCH_CUDA_ARCH_LIST="12.0" ;; \
         cu128) export TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0" ;; \
     esac && \
+    export MAX_JOBS=1 && \
     python3.12 -m pip install --no-cache-dir --no-build-isolation -e . && \
     rm -rf /tmp/build/SageAttention/.git
 
