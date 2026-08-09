@@ -206,7 +206,7 @@ RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && 
     --extra-index-url "${TORCH_INDEX_URL}" \
     -r requirements.lock
 
-RUN RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
+RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
     cd /tmp/build/SageAttention && \
     git checkout ${SAGEATTENTION_COMMIT} && \
     case "${TORCH_INDEX_SUFFIX}" in \
