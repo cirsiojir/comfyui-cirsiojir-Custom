@@ -47,7 +47,7 @@ RUN apt-get update && \
     && wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update \
-    && apt-get install -y --no-install-recommends cuda-minimal-build-${CUDA_VERSION_DASH} libcusparse-dev-${CUDA_VERSION_DASH} libcublas-dev-${CUDA_VERSION_DASH} libcusolver-dev-${CUDA_VERSION_DASH} libcurand-dev-${CUDA_VERSION_DASH} \
+    && apt-get install -y --no-install-recommends cuda-minimal-build-${CUDA_VERSION_DASH} libcusparse-dev-${CUDA_VERSION_DASH} libcublas-dev-${CUDA_VERSION_DASH} libcusolver-dev-${CUDA_VERSION_DASH} libcurand-dev-${CUDA_VERSION_DASH} cuda-cudart-dev-${CUDA_VERSION_DASH} \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm cuda-keyring_1.1-1_all.deb \
@@ -206,7 +206,7 @@ RUN TORCH_INDEX_URL="https://download.pytorch.org/whl/${TORCH_INDEX_SUFFIX}" && 
     --extra-index-url "${TORCH_INDEX_URL}" \
     -r requirements.lock
 
-RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
+RUN RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAttention && \
     cd /tmp/build/SageAttention && \
     git checkout ${SAGEATTENTION_COMMIT} && \
     case "${TORCH_INDEX_SUFFIX}" in \
@@ -214,6 +214,8 @@ RUN git clone https://github.com/woct0rdho/SageAttention.git /tmp/build/SageAtte
         cu128) export TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0" ;; \
     esac && \
     export MAX_JOBS=1 && \
+    ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+    export LIBRARY_PATH="/usr/local/cuda/lib64/stubs:${LIBRARY_PATH}" && \
     python3.12 -m pip install --no-cache-dir --no-build-isolation -e . && \
     rm -rf /tmp/build/SageAttention/.git
 
