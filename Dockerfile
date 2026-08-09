@@ -175,7 +175,7 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
             cat "$node_dir/requirements.txt" >> requirements.in; \
         fi; \
     done && \
-    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v '^-' | grep -v 'git+' | grep -v 'http' | sed 's/#.*//' | sed 's/\s.*//' | grep -E '^[a-zA-Z0-9][a-zA-Z0-9._-]+' > requirements.clean && \
+    grep -v '^\s*$' requirements.in | grep -v '^#' | grep -v '^-' | grep -v 'git+' | grep -v 'http' | sed 's/#.*//' | sed 's/\s.*//' | grep -E '^[a-zA-Z0-9][a-zA-Z0-9._-]+' | grep -vxE 'torch|torchvision|torchaudio' > requirements.clean && \
     mv requirements.clean requirements.in && \
     sort -u requirements.in -o requirements.in && \
     echo "GitPython" >> requirements.in && \
