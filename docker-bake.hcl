@@ -30,13 +30,13 @@ variable "TORCHAUDIO_VERSION" {
 }
 # 5090 image (cu130) — can diverge from regular when needed
 variable "TORCH_VERSION_5090" {
-  default = "2.11.0+cu130"
+  default = "2.13.0+cu130"
 }
 variable "TORCHVISION_VERSION_5090" {
-  default = "0.26.0+cu130"
+  default = "0.28.0+cu130"
 }
 variable "TORCHAUDIO_VERSION_5090" {
-  default = "2.11.0+cu130"
+  default = "2.13.0+cu130"
 }
 variable "FILEBROWSER_VERSION" {
   default = "v2.59.0"
