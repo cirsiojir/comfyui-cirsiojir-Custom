@@ -20,13 +20,13 @@ variable "RUNPODDIRECT_SHA" {
 }
 # Regular image (cu128)
 variable "TORCH_VERSION" {
-  default = "2.7.1+cu128"
+  default = "2.11.0+cu128"
 }
 variable "TORCHVISION_VERSION" {
-  default = "0.22.1+cu128"
+  default = "0.26.0+cu128"
 }
 variable "TORCHAUDIO_VERSION" {
-  default = "2.7.1+cu128"
+  default = "2.11.0+cu128"
 }
 # 5090 image (cu130) — can diverge from regular when needed
 variable "TORCH_VERSION_5090" {
