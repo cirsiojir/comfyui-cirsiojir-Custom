@@ -32,6 +32,11 @@ jobs:
             --set "*.tags=ghcr.io/${{ github.repository_owner }}/comfyui-cirsiojir:cuda13.0" \
             --no-cache \
             --push
+      - name: Clean up disk space between builds
+        run: |
+          docker buildx prune --all --force
+          docker image prune --all --force
+          df -h
       - name: Build and Push CUDA 12.8
         run: |
           docker buildx bake regular \
