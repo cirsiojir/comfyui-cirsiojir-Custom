@@ -6,6 +6,7 @@ VENV_DIR="$COMFYUI_DIR/.venv-cu128"
 OLD_VENV_DIR="$COMFYUI_DIR/.venv"
 FILEBROWSER_CONFIG="/root/.config/filebrowser/config.json"
 DB_FILE="/workspace/runpod-slim/filebrowser.db"
+SAGEATTENTION_COMMIT="e14793959abaabe45b8bd95417ed836419c55ee1"
 
 # ---------------------------------------------------------------------------- #
 #                          Function Definitions                                  #
@@ -100,6 +101,35 @@ start_jupyter() {
         --IdentityProvider.token="${JUPYTER_PASSWORD:-}" \
         --ServerApp.allow_origin=* &> /jupyter.log &
     echo "Jupyter Lab started"
+}
+
+# Ensure SageAttention is importable in the active venv.
+# Handles reused persistent volumes where the venv predates SageAttention
+# being baked into the image.
+ensure_sageattention() {
+    if python -c "import sageattention" 2>/dev/null; then
+        echo "SageAttention already available in venv"
+        return
+    fi
+
+    echo "SageAttention not found in venv — installing (this may take a few minutes)..."
+
+    # Detect CUDA version dash-format (e.g. 13-0) from nvcc at runtime
+    CUDA_DASH=$(nvcc --version 2>/dev/null | grep -oP 'release \K[0-9]+\.[0-9]+' | tr '.' '-')
+    if [ -z "$CUDA_DASH" ]; then
+        echo "WARNING: could not detect CUDA version via nvcc — skipping SageAttention install"
+        return
+    fi
+
+    apt-get update -qq && apt-get install -y --no-install-recommends -qq \
+        "libcusparse-dev-${CUDA_DASH}" "libcublas-dev-${CUDA_DASH}" \
+        "libcusolver-dev-${CUDA_DASH}" "libcurand-dev-${CUDA_DASH}" \
+        > /dev/null 2>&1
+
+    pip install --no-build-isolation \
+        "git+https://github.com/woct0rdho/SageAttention.git@${SAGEATTENTION_COMMIT}" \
+        && echo "SageAttention installed successfully" \
+        || echo "WARNING: SageAttention install failed — continuing without it"
 }
 
 # ---------------------------------------------------------------------------- #
@@ -202,6 +232,9 @@ fi
 
 # Warm up pip so ComfyUI-Manager's 5s timeout check doesn't fail on cold start
 python -m pip --version > /dev/null 2>&1
+
+# Ensure SageAttention is available (handles reused volumes with old venvs)
+ensure_sageattention
 
 # Start ComfyUI — keep container alive if it crashes so SSH/Jupyter remain accessible
 cd $COMFYUI_DIR
