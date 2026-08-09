@@ -179,6 +179,7 @@ RUN cat ComfyUI/requirements.txt > requirements.in && \
     mv requirements.clean requirements.in && \
     sort -u requirements.in -o requirements.in && \
     echo "GitPython" >> requirements.in && \
+    echo "torch==${TORCH_VERSION}" >> requirements.in && \
     echo "opencv-python" >> requirements.in && \
     echo "jupyter" >> requirements.in && \
     echo "jupyter-resource-usage" >> requirements.in && \
