@@ -15,7 +15,6 @@ ARG TORCH_VERSION
 ARG TORCHVISION_VERSION
 ARG TORCHAUDIO_VERSION
 ARG RGTHREE_SHA
-ARG FLUXKLEIN_SHA
 ARG QWENMULTIANGLE_SHA
 ARG VIDEOHELPERSUITE_SHA
 ARG CUSTOMSCRIPTS_SHA 
@@ -80,10 +79,6 @@ RUN curl -fSL "https://github.com/Comfy-Org/ComfyUI-Manager/archive/${MANAGER_SH
     mkdir -p ComfyUI-RunpodDirect && tar xzf runpoddirect.tar.gz --strip-components=1 -C ComfyUI-RunpodDirect && rm runpoddirect.tar.gz && \
     curl -fSL "https://github.com/rgthree/rgthree-comfy/archive/${RGTHREE_SHA}.tar.gz" -o rgthree.tar.gz && \
     mkdir -p rgthree-comfy && tar xzf rgthree.tar.gz --strip-components=1 -C rgthree-comfy && rm rgthree.tar.gz && \
-    curl -fSL "https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer/archive/${FLUXKLEIN_SHA}.tar.gz" -o fluxklein.tar.gz && \
-    mkdir -p ComfyUI-Flux2Klein-Enhancer && \
-    tar xzf fluxklein.tar.gz --strip-components=1 -C ComfyUI-Flux2Klein-Enhancer && \
-    rm fluxklein.tar.gz && \
     curl -fSL "https://github.com/jtydhr88/ComfyUI-qwenmultiangle/archive/${QWENMULTIANGLE_SHA}.tar.gz" -o qwenmultiangle.tar.gz && \
     mkdir -p ComfyUI-qwenmultiangle && \
     tar xzf qwenmultiangle.tar.gz --strip-components=1 -C ComfyUI-qwenmultiangle && \
@@ -129,9 +124,6 @@ RUN cd /tmp/build/ComfyUI && \
     cd /tmp/build/ComfyUI/custom_nodes/rgthree-comfy && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "rgthree-comfy ${RGTHREE_SHA}" && \
     git remote add origin https://github.com/rgthree/rgthree-comfy.git && \
-    cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-Flux2Klein-Enhancer && \
-    git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "Flux2Klein ${FLUXKLEIN_SHA}" && \
-    git remote add origin https://github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer.git && \
     cd /tmp/build/ComfyUI/custom_nodes/ComfyUI-qwenmultiangle && \
     git init && git add -A && git -c user.name=- -c user.email=- commit -q -m "QwenMultiAngle ${QWENMULTIANGLE_SHA}" && \
     git remote add origin https://github.com/jtydhr88/ComfyUI-qwenmultiangle.git && \
